@@ -9,12 +9,32 @@
             alt=""
             class="h-[200px] w-[200px] object-cover m-auto"
           />
-          <p class="text-[20px] font-medium text-center mt-8">{{listSongs[idSong].name}}</p>
+          <p class="text-[20px] font-medium text-center mt-8 font-sans text-white">{{listSongs[idSong].name}}</p>
           <audio
             autoplay
+            preload:="auto"	
             controls
             :src="listSongs[idSong].url">
           </audio>
+          <div class="flex gap-3 p-4">
+            <button @click="prevSong()">
+              <fa icon="fa-fast-backward" class="text-white"/>
+            </button>
+            <button @click="nextSong()">
+              <fa icon="fa-fast-forward" class="text-white"/>
+            </button>
+          </div>
+          <button @click="searchSong()" >HIIIIII</button>
+          <input type="text" v-model="keySearch"/>
+          <h2>{{keySearch}}</h2>
+          <!-- <div>
+            <audio-player
+              ref="audioPlayer"
+              :audio-list="listSongs[idSong].url"
+              theme-color="#ff2929"
+            />
+          </div> -->
+
         </div>
       </div>
     </div>
@@ -53,15 +73,61 @@ export default {
     return {
       listSongs : DataSongs,
       idSong : 0,
+      listSongsFilter: [],
+      keySearch: "Sing me to sleep",
+      currentAudioName: '',
+      audioList: [
+        {
+          name: 'audio1',
+          url: 'https://www.0dutv.com/upload/dance/F25F74A0B8FF82503241801D0E2CA5CD.mp3'
+        },
+        {
+          name: 'audio2',
+          url: 'https://www.0dutv.com/upload/dance/20200316/C719452E3C7834080007662021EA968E.mp3'
+        }
+      ],
     }
+  },
+  components: {
+    // AudioPlayer,
   },
   methods: {
     onPlay(id){
-      this.idSong = id;
+      this.idSong = id;   
+    },
+    prevSong(){
+      if(this.idSong == 0){
+        this.idSong = this.listSongs.length - 1;
+      } else {
+        this.idSong = this.idSong - 1;
+      }
+    },
+    nextSong(){
+      if(this.idSong == (this.listSongs.length - 1)){
+        this.idSong = 0;
+      } else {
+        this.idSong = this.idSong + 1;
+      }
+    },
+    searchSong(){
+      if(this.keySearch != ''){
+        this.listSongsFilter = this.listSongs.filter(song => song.name.search(this.keySearch));
+      console.log(this.listSongsFilter);
+      }
     }
+    // text(){
+    //   console.log("pause song!!!");
+    // },
+    // text1(){
+    //   console.log("pause song!!!");
+    // }
   },
+  watch: {
+    
+  }
 };
 import DataSongs from './data/songs.json';
+// import AudioPlayer from '@liripeng/vue-audio-player'
 </script>
 <style>
 .active_on_play{
