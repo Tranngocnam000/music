@@ -2,18 +2,18 @@
     <div class="basis-1/4 h-screen bg-slate-700">
       <div class="flex flex-col items-center gap-20 pt-9">
         <img src="../assets/images/sound.png" alt="" class="h-[100px]" />
-        <div class="wrapper_info_song">
+        <div>
           <img
-            :src="listSongs[this.idSong].links.images[0].url"
+            :src="listSong[this.idSong].links.images[0].url"
             alt=""
             class="h-[200px] w-[200px] object-cover m-auto"
           />
-          <p class="text-[20px] font-medium text-center mt-8 font-sans text-white">{{listSongs[idSong].name}}</p>
+          <p class="text-[20px] font-medium text-center mt-8 font-sans text-white">{{listSong[idSong].name}}</p>
           <audio
             autoplay
             preload:="auto"	
             controls
-            :src="listSongs[this.idSong].url">
+            :src="listSong[this.idSong].url">
           </audio>
           <div class="flex gap-3 p-4">
             <button @click="prevSong()">
@@ -23,6 +23,7 @@
               <fa icon="fa-fast-forward" class="text-white"/>
             </button>
           </div>
+          <!-- <h1>{{listSong[this.idSong].links.images[0].url}}</h1> -->
           <!-- <button @click="searchSong()" class="border-solid border-black border-2">Search</button>
           <input type="text" v-model="keySearch"/>
           <h2>{{keySearch}}</h2> -->
@@ -32,6 +33,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
     export default{
         name: "detail_song",
         data(){
@@ -39,17 +41,11 @@
 
             }
         },
-        components: {
-
+        computed: {
+          ...mapGetters(['listSong', 'idSong']),
         },
-        props: ['listSongs','idSong'],
         methods: {
-            prevSong(){
-                this.$emit('prevSong');
-            },
-            nextSong(){
-                this.$emit('nextSong');
-            },
+            ...mapActions(['prevSong','nextSong']),
         },
     }
 </script>

@@ -1,16 +1,12 @@
 <template>
   <div id="music" class="flex flex-row ">
-    <DetailSong 
-    :listSongs="listSongs"
-    :idSong="idSong"
-    @prevSong="prevSong"
-    @nextSong="nextSong"
-    />
-    <ListSong
-    :listSongs="listSongs"
-    :idSong="idSong"
-    @onPlay="onPlay"
-    />
+    <DetailSong />
+      <!-- <input type="text" 
+      class="border-solid border-black border-2" 
+      v-model="keySearch"
+      />
+      <button @click="searchSong()" class="border-solid border-2 border-red-700">Search</button> -->
+    <ListSong />
 </div>
 </template>
 
@@ -19,10 +15,7 @@ export default {
   name: "App",
   data(){
     return {
-      listSongs : DataSongs,
-      keytest:"",
-      idSong : 0,
-      listSongsFilter: [],
+      listSongFilter: [],
       keySearch: "",
     }
   },
@@ -34,38 +27,16 @@ export default {
 
   },
   methods: {
-    
-    prevSong(){
-      if(this.idSong == 0){
-        this.idSong = this.listSongs.length - 1;
-      } else {
-        this.idSong = this.idSong - 1;
-      }
-    },
-    nextSong(){
-      if(this.idSong == (this.listSongs.length - 1)){
-        this.idSong = 0;
-      } else {
-        this.idSong = this.idSong + 1;
-      }
-    },
-    onPlay(id){  
-      console.log("id in app", id);
-      this.idSong = id;
-    },
     // searchSong(){
+    //   this.listSong = DataSongs;
     //   if(this.keySearch != ''){
-    //     this.listSongsFilter = this.listSongs.filter(song => song.name.toUpperCase().includes(this.keySearch.toUpperCase()));
-    //   console.log(this.listSongsFilter);
+    //     this.listSong = this.listSong.filter(
+    //       song => song.name.toUpperCase().includes(this.keySearch.toUpperCase())
+    //     );
     //   }
     // },
   },
-  watch: {
-    
-  },
 };
-import DataSongs from './data/songs.json';
-// import AudioPlayer from '@liripeng/vue-audio-player'
 import DetailSong from "./components/detailsong.vue"
 import ListSong from "./components/listsong.vue"
 </script>

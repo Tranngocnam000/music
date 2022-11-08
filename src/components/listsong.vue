@@ -11,11 +11,11 @@
         </thead>
         <tbody class="bg-slate-800 text-white">
           <tr class="h-[50px] cursor-pointer hover:bg-slate-600" 
-            v-for="(song, index) in listSongs" :key="index"
+            v-for="(song, index) in this.listSong" :key="index"
             @click="onPlay(song.id)"
             :class="{ active_on_play: (this.idSong===song.id) }"
             >
-            <td class="text-center">{{song.id + 1}}</td>
+            <td class="text-center">{{index + 1}}</td>
             <td class="text-center">{{song.name}}</td>
             <td class="text-center">{{song.author}}</td>
             <td class="text-center"><a :href="song.url"><fa icon="download"/></a></td>
@@ -26,21 +26,18 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
     export default{
-        name: "list_song",
+        name: "list-song",
         data(){
             return{
             }
         },
-        components: {
-
+        computed: {
+          ...mapGetters(['name','listSong','idSong']),
         },
-        props: ['listSongs','idSong'],
         methods: {
-            onPlay(id){  
-            this.$emit('onPlay', id);
-            console.log("id in lisist song", id);
-            },
+          ...mapMutations(['onPlay']),
         }
     }
 </script>
